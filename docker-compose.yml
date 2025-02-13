@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  restapi:
+    build: .
+    container_name: restapi_container
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./scripts:/root/scripts
+      - ./tests_step:/root/tests_step
+      - /home/tiagojesus/projects/smallstep_docker/volumes/step:/root/step
+    
+    environment:
+      - STEP_IP=172.29.90.188
+      - "DOCKER_STEPCA_INIT_NAME=WITHUS"
+      - "DOCKER_STEPCA_INIT_DNS_NAMES=localhost,$(hostname -f)"
+      - "DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT=true"
+      - "DOCKER_STEPCA_INIT_SSH=true"
+    restart: unless-stopped
